@@ -1,7 +1,6 @@
 ﻿using SalesTaxes_Library.Domain;
 using SalesTaxes_Library.Storage;
 using System;
-using System.Linq;
 
 namespace SalesTaxes_Library
 {
@@ -50,32 +49,24 @@ namespace SalesTaxes_Library
         /// </summary>
         public void AddArticle(Article article, int quantity)
         {
-            ShoppingCart.Articles.Add(new ShoppingCartArticle(
+            var newShoppingCartArticle = new ShoppingCartArticle(
                 articleId: article.Id,
                 name: article.Name,
                 quantity: quantity,
                 singleItemPrice: article.SingleItemPrice,
-                totalTaxes: CalculateTaxesForArticle(article, quantity),
+                singleItemTaxes: CalculateTaxesForArticle(article),
                 articleType: article.ArticleType,
-                isImported: article.IsImported));
+                isImported: article.IsImported);
 
-            RefreshTotalsAndTaxes();
+            ShoppingCart.Articles.Add(newShoppingCartArticle);
+
+            ShoppingCart.Total += newShoppingCartArticle.TotalPrice;
+            ShoppingCart.SalesTaxes += newShoppingCartArticle.TotalTaxes;
+
             // TODO Merge if finds the same article (distinct by ArticleId)
         }
 
-        private void RefreshTotalsAndTaxes()
-        {
-            // TODO: fare add per performance, invece che ricalcolare tutto
-            // TODO: nel remove fare minus invece che ricalcolare tutto
-
-            ShoppingCart.Total = ShoppingCart.Articles.Sum(
-                article => article.SingleItemPrice * article.Quantity + article.TotalTaxes);
-
-            ShoppingCart.SalesTaxes = ShoppingCart.Articles.Sum(
-                article => article.TotalTaxes);
-        }
-
-        private decimal CalculateTaxesForArticle(Article article, int quantity)
+        private decimal CalculateTaxesForArticle(Article article)
         {
             // Basic sales tax lookup based on the article type
             var thisArticleBasicSalesTaxPercentage = _shopConfiguration.BasicSalesTax[article.ArticleType];
@@ -90,7 +81,7 @@ namespace SalesTaxes_Library
             if (totalTaxesPercentage <= 0)
                 return 0M;
 
-            decimal thisArticleTaxPercentage = ((quantity * article.SingleItemPrice) / 100M) * totalTaxesPercentage;
+            decimal thisArticleTaxPercentage = ((article.SingleItemPrice) / 100M) * totalTaxesPercentage;
 
             // Round up to the nearest 0.05
             return thisArticleTaxPercentage.RoundUpToTheNearest005();
@@ -102,8 +93,9 @@ namespace SalesTaxes_Library
         /// <param name="shoppingCartArticleId"></param>
         public void RemoveArticle(ShoppingCartArticle shoppingCartArticle)
         {
+            ShoppingCart.Total -= shoppingCartArticle.TotalPrice;
+            ShoppingCart.SalesTaxes -= shoppingCartArticle.TotalTaxes;
             ShoppingCart.Articles.Remove(shoppingCartArticle);
-            RefreshTotalsAndTaxes();
         }
     }
 }

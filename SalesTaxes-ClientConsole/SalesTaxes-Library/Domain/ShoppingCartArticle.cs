@@ -15,7 +15,7 @@ namespace SalesTaxes_Library.Domain
             string name,
             int quantity,
             decimal singleItemPrice,
-            decimal totalTaxes,
+            decimal singleItemTaxes,
             ArticleTypes articleType,
             bool isImported)
         {
@@ -23,7 +23,7 @@ namespace SalesTaxes_Library.Domain
             Name = name ?? throw new ArgumentNullException(nameof(name));
             Quantity = quantity;
             SingleItemPrice = singleItemPrice;
-            TotalTaxes = totalTaxes;
+            SingleItemTaxes = singleItemTaxes;
             ArticleType = articleType;
             IsImported = isImported;
         }
@@ -52,14 +52,19 @@ namespace SalesTaxes_Library.Domain
         public decimal SingleItemPrice { get; }
 
         /// <summary>
-        /// The total taxes of this cart item
+        /// Single item taxes based on <see cref="ArticleType"/>
         /// </summary>
-        public decimal TotalTaxes { get; }
+        public decimal SingleItemTaxes { get; }
 
         /// <summary>
         /// The total price with calculated taxes
         /// </summary>
-        public decimal TotalPrice => SingleItemPrice * Quantity + TotalTaxes;
+        public decimal TotalPrice => (SingleItemPrice + SingleItemTaxes) * Quantity;
+
+        /// <summary>
+        /// The total taxes for this cart item
+        /// </summary>
+        public decimal TotalTaxes => SingleItemTaxes * Quantity;
 
         /// <summary>
         /// The kind of item
