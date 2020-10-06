@@ -1,4 +1,5 @@
 ﻿using Castle.Windsor;
+using System.Threading;
 
 namespace SalesTaxes_ClientConsole
 {
@@ -16,8 +17,14 @@ namespace SalesTaxes_ClientConsole
             var interviewInput1 = dependencyContainer.Resolve<InterviewInput1>();
             interviewInput1.Run();
 
+            // A delay to let the browser start
+            Thread.Sleep(500);
+
             var interviewInput2 = dependencyContainer.Resolve<InterviewInput2>();
             interviewInput2.Run();
+
+            // A delay to let the browser start
+            Thread.Sleep(500);
 
             var interviewInput3 = dependencyContainer.Resolve<InterviewInput3>();
             interviewInput3.Run();

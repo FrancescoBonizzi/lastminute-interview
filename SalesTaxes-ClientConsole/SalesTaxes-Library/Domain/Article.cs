@@ -34,8 +34,7 @@ namespace SalesTaxes_Library.Domain
         /// <summary>
         /// The single item price.
         /// </summary>
-        /// <remarks>I choose <see cref="decimal" /> becaus it is more suitable for financial calculations:
-        /// It is a 128-bit data type. 
+        /// <remarks>I choose <see cref="decimal" /> because it is more suitable for financial calculations.
         /// Compared to floating-point types, has more precision on small numbers</remarks>
         public decimal SingleItemPrice { get; }
 
