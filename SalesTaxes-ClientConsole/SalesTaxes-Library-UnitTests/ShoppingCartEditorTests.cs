@@ -125,7 +125,7 @@ namespace SalesTaxes_Library_UnitTests
             shoppingCartEditor.AddArticle(
                 article: new Article(
                     id: 0,
-                    name: "Box of chocolates",
+                    name: "Imported box of chocolates",
                     singleItemPrice: 10.00M,
                     articleType: ArticleTypes.Food,
                     isImported: true),
@@ -135,7 +135,7 @@ namespace SalesTaxes_Library_UnitTests
             shoppingCartEditor.AddArticle(
                 article: new Article(
                     id: 1,
-                    name: "Bottle of perfume",
+                    name: "Imported bottle of perfume",
                     singleItemPrice: 47.50M,
                     articleType: ArticleTypes.NonCategorized,
                     isImported: true),
@@ -188,7 +188,7 @@ namespace SalesTaxes_Library_UnitTests
             shoppingCartEditor.AddArticle(
                 article: new Article(
                     id: 3,
-                    name: "Box of imported chocolates",
+                    name: "Imported box of chocolates",
                     singleItemPrice: 11.25M,
                     articleType: ArticleTypes.Food,
                     isImported: true),

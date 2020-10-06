@@ -1,72 +1,26 @@
-﻿using SalesTaxes_Library;
-using SalesTaxes_Library.Domain;
-using SalesTaxes_Library.Presentation;
-using SalesTaxes_Library.Presentation.Domain;
-using SalesTaxes_Library.Storage;
-using System.Diagnostics;
+﻿using Castle.Windsor;
 
 namespace SalesTaxes_ClientConsole
 {
+    /// <summary>
+    /// A console application that renders shopping carts receipts
+    /// </summary>
     public class Program
     {
         private static void Main(string[] args)
         {
-            // Cart generation
-            IConfigurationRepository shopConfigurationRepository = new InMemoryConfigurationRepository();
-            IShoppingCartRepository shoppingCartRepository = new InMemoryShoppingCartRepository();
-            IReceiptCodeProvider receiptCodeProvider = new RandomStringWithPrefixReceiptCodeProvider();
-            var shoppingCartEditor = new ShoppingCartEditor(
-                shoppingCartRepository,
-                shopConfigurationRepository);
+            var dependenciesInstaller = new DependenciesInstaller();
+            var dependencyContainer = new WindsorContainer();
+            dependencyContainer.Install(dependenciesInstaller);
 
-            shoppingCartEditor.AddArticle(
-                article: new Article(
-                    id: 0,
-                    name: "Book",
-                    singleItemPrice: 12.49M,
-                    articleType: ArticleTypes.Book,
-                    isImported: false),
-                quantity: 1);
+            var interviewInput1 = dependencyContainer.Resolve<InterviewInput1>();
+            interviewInput1.Run();
 
-            shoppingCartEditor.AddArticle(
-                article: new Article(
-                    id: 1,
-                    name: "Music CD",
-                    singleItemPrice: 14.99M,
-                    articleType: ArticleTypes.NonCategorized,
-                    isImported: false),
-                quantity: 1);
+            var interviewInput2 = dependencyContainer.Resolve<InterviewInput2>();
+            interviewInput2.Run();
 
-            shoppingCartEditor.AddArticle(
-                article: new Article(
-                    id: 1,
-                    name: "Ciocolate Bar",
-                    singleItemPrice: 0.85M,
-                    articleType: ArticleTypes.Food,
-                    isImported: false),
-                quantity: 1);
-
-            // Receipt generation
-            // TODO Da configurazione, va bene anche la solita
-            var receiptFormatter = new ReceiptFormatter(shopConfigurationRepository);
-            var receiptTemplateLoader = new ReceiptGenerator(
-                receiptFormatter,
-                shopConfigurationRepository,
-                receiptCodeProvider);
-
-            var receipt = receiptTemplateLoader.GenerateReceipt(
-                shoppingCart: shoppingCartEditor.ShoppingCart,
-                receiptCustomer: new ReceiptCustomer(
-                    name: "lastminute.com",
-                    address: "Vicolo de’ Calvi, 2, 6830 Chiasso, Svizzera",
-                    email: "testemail@test.it"));
-
-            var htmlReceiptPath = receiptTemplateLoader.ExportReceiptAsHtml(
-                receipt: receipt,
-                destinationFolder: @"C:\Users\francescobo\LastMinuteReceipts");
-            
-            // Opens it in the default browser
-            Process.Start(@"cmd.exe ", $"/c {htmlReceiptPath}");
+            var interviewInput3 = dependencyContainer.Resolve<InterviewInput3>();
+            interviewInput3.Run();
         }
     }
 }
