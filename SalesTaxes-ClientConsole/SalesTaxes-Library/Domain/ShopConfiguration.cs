@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SalesTaxes_Library.Presentation.Domain;
+using System;
 using System.Collections.Generic;
 
 namespace SalesTaxes_Library.Domain
@@ -12,7 +13,9 @@ namespace SalesTaxes_Library.Domain
             decimal importDutyTaxPercentage,
             Dictionary<ArticleTypes, decimal> basicSalesTax,
             string currencySymbol,
-            string dateFormat)
+            string dateFormat,
+            string htmlReceiptTemplateFoldersPath,
+            ReceiptBillingCompany receiptBillingCompany)
         {
             if (string.IsNullOrWhiteSpace(currencySymbol))
             {
@@ -28,10 +31,19 @@ namespace SalesTaxes_Library.Domain
                     nameof(dateFormat));
             }
 
+            if (string.IsNullOrWhiteSpace(htmlReceiptTemplateFoldersPath))
+            {
+                throw new ArgumentException(
+                    $"'{nameof(htmlReceiptTemplateFoldersPath)}' cannot be null or whitespace",
+                    nameof(htmlReceiptTemplateFoldersPath));
+            }
+
             ImportDutyTaxPercentage = importDutyTaxPercentage;
             BasicSalesTax = basicSalesTax ?? throw new ArgumentNullException(nameof(basicSalesTax));
             CurrencySymbol = currencySymbol;
             DateFormat = dateFormat;
+            HtmlReceiptTemplateFoldersPath = htmlReceiptTemplateFoldersPath;
+            ReceiptBillingCompany = receiptBillingCompany ?? throw new ArgumentNullException(nameof(receiptBillingCompany));
         }
 
         /// <summary>
@@ -53,5 +65,15 @@ namespace SalesTaxes_Library.Domain
         /// The current shop date format
         /// </summary>
         public string DateFormat { get; }
+
+        /// <summary>
+        /// A folder that should contain html assets to render a receipt
+        /// </summary>
+        public string HtmlReceiptTemplateFoldersPath { get; }
+
+        /// <summary>
+        /// The company details of this shop, to be used in the final receipt
+        /// </summary>
+        public ReceiptBillingCompany ReceiptBillingCompany { get; }
     }
 }

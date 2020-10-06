@@ -6,4 +6,8 @@
     <RootNamespace>SalesTaxes_ClientConsole</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SalesTaxes-Library\SalesTaxes-Library.csproj" />
+  </ItemGroup>
+
 </Project>

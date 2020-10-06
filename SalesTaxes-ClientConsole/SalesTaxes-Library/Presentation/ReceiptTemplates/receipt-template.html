@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="language" content="en-us">
+
+    <title>An example receipt</title>
+    <link href="receipt-template-style.css" rel="stylesheet" />
+    <script src="receipt-template-loading.js"></script>
+
+</head>
+
+<body>
+
+    <div id="errors-content">
+
+    </div>
+
+    <div id="receipt-content">
+
+        <div class="image-block-container">
+
+            <div>
+                <h1>Receipt</h1>
+                <div class="key-value-container">
+
+                    <div class="key-value-row" id='receiptCodeField'>
+                        <div class="key-value-key">Receipt Code</div>
+                        <div class="key-value-value" id='receiptCode'></div>
+                    </div>
+
+                    <div class="key-value-row" id='creationDateField'>
+                        <div class="key-value-key">Receipt Date</div>
+                        <div class="key-value-value" id='creationDate'></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="two-columns-box top-space">
+
+            <div class="information-block" id="billedByBlock">
+                <h3>Billed By</h3>
+
+                <span id="companyName" class="bold"></span>
+                <span id="holderName"></span>
+                <span id="address"></span>
+
+                <div class="key-value-container">
+
+                    <div class="key-value-row" id='emailField'>
+                        <div class="key-value-key">Email</div>
+                        <a class="key-value-value" id='email'></a>
+                    </div>
+
+                    <div class="key-value-row" id='phoneField'>
+                        <div class="key-value-key">Phone</div>
+                        <div class="key-value-value" id='phone'></div>
+                    </div>
+
+                    <div class="key-value-row" id='webSiteField'>
+                        <div class="key-value-key">Web site</div>
+                        <a class="key-value-value" id='webSite'></a>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="information-block low-margin-left" id='billedToBlock'>
+                <h3>Billed To</h3>
+                <span id="customerName" class="bold"></span>
+                <span id="customerAddress"></span>
+
+                <div class="key-value-container">
+                    <div class="key-value-row" id='customerEmailField'>
+                        <div class="key-value-key">Email</div>
+                        <a class="key-value-value" id='customerEmail'></a>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <table id="articles-table" class="top-space">
+
+            <!-- I used the thead tag to let the printer repeat the header on each page in case of a long items list -->
+            <thead>
+                <tr>
+                    <th class="articles-th" id="firstTh">Item</th>
+                    <th class="articles-th">Quantity</th>
+                    <th class="articles-th">Taxes</th>
+                    <th class="articles-th" id="lastTh">Price</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            </tbody>
+
+        </table>
+
+        <div class="align-right">
+            <div class="key-value-container top-space totals-container">
+
+                <div class="key-value-row" id='taxesField'>
+                    <div class="key-value-key" id='taxesLabel'>Taxes</div>
+                    <div class="key-value-value" id='taxesValue'></div>
+                </div>
+
+                <div class="key-value-row" id='totalField'>
+                    <div class="key-value-key hr-top" id='totalLabel'>Total</div>
+                    <div class="key-value-value total-value hr-top" id='totalValue'></div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
+
+<script>
+
+    try {
+
+        var rawJson = '#SHOPPING_CART_JSON_SUBSTITUTION#';
+        loadTemplate(rawJson);
+
+    } catch (err) {
+        document.getElementById('errors-content').style = 'display: block';
+        document.getElementById('receipt-content').style = 'display: none';
+        document.getElementById('errors-content').innerText = err;
+    }
+
+</script>

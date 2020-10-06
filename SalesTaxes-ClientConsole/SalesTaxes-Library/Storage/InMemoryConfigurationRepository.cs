@@ -1,4 +1,5 @@
 ﻿using SalesTaxes_Library.Domain;
+using SalesTaxes_Library.Presentation.Domain;
 using System.Collections.Generic;
 
 namespace SalesTaxes_Library.Storage
@@ -23,7 +24,15 @@ namespace SalesTaxes_Library.Storage
                     [ArticleTypes.Medical] = 0
                 },
                 currencySymbol: "€",
-                dateFormat: "dd/MM/yyyy HH:mm");
+                dateFormat: "dd/MM/yyyy HH:mm",
+                htmlReceiptTemplateFoldersPath: @"Presentation\ReceiptTemplates",
+                new ReceiptBillingCompany(
+                    companyName: "4days-Soft",
+                    holderName: "Francesco Bonizzi",
+                    address: "Parma, Italy",
+                    email: "fbonizzi.90@gmail.com",
+                    phone: null,
+                    webSite: null));
         }
 
         public ShopConfiguration Get()

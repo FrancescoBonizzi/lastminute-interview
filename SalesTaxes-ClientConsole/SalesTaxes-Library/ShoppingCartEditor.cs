@@ -30,20 +30,6 @@ namespace SalesTaxes_Library
             _shoppingCartRepository.Save(ShoppingCart);
         }
 
-
-        // TODO: Move it on another class like template applicator
-
-        /// <summary>
-        /// Calculates the receipt totals
-        /// </summary>
-        /// <returns></returns>
-        //public FormattedTotals GetTotals()
-        //{
-        //    return new FormattedTotals(
-        //        formattedTaxesAmount: $"{_shopConfiguration.CurrencySymbol} {ShoppingCart.SalesTaxes}",
-        //        formattedTotalAmount: $"{_shopConfiguration.CurrencySymbol} {ShoppingCart.Total}");
-        //}
-
         /// <summary>
         /// Adds an article to the current shopping cart
         /// </summary>
@@ -67,8 +53,6 @@ namespace SalesTaxes_Library
 
             ShoppingCart.Total += newShoppingCartArticle.TotalPrice;
             ShoppingCart.SalesTaxes += newShoppingCartArticle.TotalTaxes;
-
-            // TODO Merge if finds the same article (distinct by ArticleId)
         }
 
         private decimal CalculateTaxesForArticle(Article article)
