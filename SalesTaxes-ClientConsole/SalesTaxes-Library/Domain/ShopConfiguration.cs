@@ -20,14 +20,14 @@ namespace SalesTaxes_Library.Domain
             if (string.IsNullOrWhiteSpace(currencySymbol))
             {
                 throw new ArgumentException(
-                    $"'{nameof(currencySymbol)}' cannot be null or whitespace", 
+                    $"'{nameof(currencySymbol)}' cannot be null or whitespace",
                     nameof(currencySymbol));
             }
 
             if (string.IsNullOrWhiteSpace(dateFormat))
             {
                 throw new ArgumentException(
-                    $"'{nameof(dateFormat)}' cannot be null or whitespace", 
+                    $"'{nameof(dateFormat)}' cannot be null or whitespace",
                     nameof(dateFormat));
             }
 

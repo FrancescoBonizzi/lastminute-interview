@@ -45,7 +45,7 @@ namespace SalesTaxes_ClientConsole
             container.Register(Component
                 .For<ReceiptGenerator>()
                 .LifestyleSingleton());
-            
+
             // Registers automatically each IInterviewInput
             container.Register(Classes.FromAssembly(Assembly.GetExecutingAssembly())
                 .BasedOn<IInterviewInput>()

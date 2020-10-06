@@ -44,11 +44,11 @@ namespace SalesTaxes_Library.Presentation
             if (string.IsNullOrEmpty(templateFolderFullPath))
             {
                 throw new ArgumentException(
-                    $"'{nameof(templateFolderFullPath)}' cannot be null or empty", 
+                    $"'{nameof(templateFolderFullPath)}' cannot be null or empty",
                     nameof(templateFolderFullPath));
             }
 
-            if(!Directory.Exists(templateFolderFullPath))
+            if (!Directory.Exists(templateFolderFullPath))
             {
                 throw new ArgumentException(
                     $"Directory {templateFolderFullPath} does not exists.",
@@ -97,7 +97,7 @@ namespace SalesTaxes_Library.Presentation
             // Populate the template
             var htmlReceiptPath = Path.GetFullPath(Path.Combine(destinationFolder, $"{receipt.ReceiptCode}.html"));
             File.WriteAllText(path: htmlReceiptPath, contents: htmlReceipt);
-            
+
             // Copy the javascript library
             File.Copy(
                 sourceFileName: _htmlTemplateJavascriptPath,
@@ -107,7 +107,7 @@ namespace SalesTaxes_Library.Presentation
             // Copy the syle for the template
             File.Copy(
                 sourceFileName: _htmlTemplateCssPath,
-                destFileName: Path.Combine(destinationFolder, _htmlTemplateCssFileName), 
+                destFileName: Path.Combine(destinationFolder, _htmlTemplateCssFileName),
                 overwrite: true);
 
             return htmlReceiptPath;

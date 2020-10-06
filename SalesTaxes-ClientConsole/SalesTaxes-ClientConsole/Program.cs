@@ -7,7 +7,7 @@ namespace SalesTaxes_ClientConsole
     /// </summary>
     public class Program
     {
-        private static void Main(string[] args)
+        private static void Main()
         {
             var dependenciesInstaller = new DependenciesInstaller();
             var dependencyContainer = new WindsorContainer();
