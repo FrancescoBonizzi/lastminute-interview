@@ -3,7 +3,7 @@
 namespace SalesTaxes_Library
 {
     /// <summary>
-    /// Some useful method to deal with decimal numbers
+    /// Some useful methods to deal with decimal numbers
     /// </summary>
     public static class Maths
     {

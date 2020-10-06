@@ -49,6 +49,11 @@ namespace SalesTaxes_Library
         /// </summary>
         public void AddArticle(Article article, int quantity)
         {
+            if (quantity <= 0)
+            {
+                throw new ArgumentException("Quantity should be greater than zero.", nameof(quantity));
+            }
+
             var newShoppingCartArticle = new ShoppingCartArticle(
                 articleId: article.Id,
                 name: article.Name,

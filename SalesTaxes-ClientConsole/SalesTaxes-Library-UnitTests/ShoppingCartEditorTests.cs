@@ -1,11 +1,8 @@
-using Microsoft.VisualStudio.TestPlatform.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SalesTaxes_Library;
 using SalesTaxes_Library.Domain;
 using SalesTaxes_Library.Storage;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Xml;
 
 namespace SalesTaxes_Library_UnitTests
 {
@@ -35,6 +32,42 @@ namespace SalesTaxes_Library_UnitTests
 
             // A new shopping cart should not have any taxes yet
             Assert.IsTrue(shoppingCartEditor.ShoppingCart.SalesTaxes == 0);
+        }
+
+        [TestMethod]
+        public void Adding_Items_To_ShoppingCart_Should_Lead_To_Increased_ArticlesCount()
+        {
+            IConfigurationRepository shopConfigurationRepository = new InMemoryConfigurationRepository();
+            IShoppingCartRepository shoppingCartRepository = new InMemoryShoppingCartRepository();
+            ShoppingCartEditor shoppingCartEditor = new ShoppingCartEditor(
+                shoppingCartRepository,
+                shopConfigurationRepository);
+
+            shoppingCartEditor.AddArticle(new Article(0, "TestArticle #1", 12.0M, ArticleTypes.NonCategorized, false), 1);
+            Assert.IsTrue(shoppingCartEditor.ShoppingCart.Articles.Count == 1);
+
+            shoppingCartEditor.AddArticle(new Article(0, "TestArticle #2", 13.0M, ArticleTypes.NonCategorized, false), 1);
+            Assert.IsTrue(shoppingCartEditor.ShoppingCart.Articles.Count == 2);
+        }
+
+        [TestMethod]
+        public void Removing_Items_To_ShoppingCart_Should_Lead_To_Decreased_ArticlesCount()
+        {
+            IConfigurationRepository shopConfigurationRepository = new InMemoryConfigurationRepository();
+            IShoppingCartRepository shoppingCartRepository = new InMemoryShoppingCartRepository();
+            ShoppingCartEditor shoppingCartEditor = new ShoppingCartEditor(
+                shoppingCartRepository,
+                shopConfigurationRepository);
+
+            shoppingCartEditor.AddArticle(new Article(0, "TestArticle #1", 12.0M, ArticleTypes.NonCategorized, false), 1);
+            shoppingCartEditor.AddArticle(new Article(0, "TestArticle #2", 13.0M, ArticleTypes.NonCategorized, false), 1);
+            Assert.IsTrue(shoppingCartEditor.ShoppingCart.Articles.Count == 2);
+
+            shoppingCartEditor.RemoveArticle(shoppingCartEditor.ShoppingCart.Articles[0]);
+            Assert.IsTrue(shoppingCartEditor.ShoppingCart.Articles.Count == 1);
+
+            shoppingCartEditor.RemoveArticle(shoppingCartEditor.ShoppingCart.Articles[0]);
+            Assert.IsTrue(shoppingCartEditor.ShoppingCart.Articles.Count == 0);
         }
 
         [TestMethod]

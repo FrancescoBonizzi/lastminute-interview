@@ -4,6 +4,10 @@ using System.Diagnostics;
 
 namespace SalesTaxes_Library.Storage
 {
+    /// <summary>
+    /// An in memory implementation of a shopphing cart repository,
+    /// just to make an example
+    /// </summary>
     public class InMemoryShoppingCartRepository : IShoppingCartRepository
     {
         public ShoppingCart New()
