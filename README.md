@@ -4,23 +4,23 @@ To complete the interview project I chose `C#` as programming language and the .
 
 ### The project structure
 - `SalesTaxes-Library`: it contains all the application domain and logic. I defined a `ShoppingCart` as the `Article`(s) container and a `ShoppingCartEditor` with the taxes and totals calculation logic. I also imagined some abstractions: a `ShopConfiguration` and `ShoppingCart`(s) providers, with the idea the they could be implemented by persisted storage classes. It is cross-platform library, so it could be reused with other clients, for example a website. Lastly, it manages the `Receipt` rendering as an HTML page.
-- `SalesTaxes-Library-UnitTests`: this is the unit tests project. I tested the interview given inputs and outputs, the shopping cart add/remove items method, and the method I defined to implement the rounding rule
+- `SalesTaxes-Library-UnitTests`: this is the unit tests project. I tested the interview given inputs and outputs, the shopping cart add/remove items method, and the method I defined to implement the rounding rule.
 - `SalesTaxes-ClientConsole`: this is the client, the starting point of the whole application. This project depends on `SalesTaxes-Library`. When started, it runs the three `IInterviewInput` to generate the receipts and show their output.
 
 ### Dependencies management
 
-Since I feel it is important to rely on abstractions and decouple the application dependencies, I decided to initialize the application with a DI container. I chose `Castle Windsor`, a very popular DI library. Inside `SalesTaxes-ClientConsole` project I defined every dependency with their own lifestyle into the `DependenciesInstaller` class. To automatize the registration of the `InterviewInput`(s) components I let this classes implement a dummy interface - `IInterviewInput`.
+Since I feel it is important to rely on abstractions and decouple the application dependencies, I decided to initialize the application with a DI container. I chose `Castle Windsor`, a very popular DI library. Inside `SalesTaxes-ClientConsole` project I defined every dependency with their own lifestyle into the `DependenciesInstaller` class. To automate the registration of the `InterviewInput`(s) components I let this classes implement a dummy interface: `IInterviewInput`.
 
 ### Data choices
 
-- To represent currency amounts I chose the .NET decimal data type, because it is more suitable for financial calculations. Compared to floating-point types, has more precision on small numbers (which is our case).
-- To categorize each article type, I defined an enum `ArticleTypes`
+- To represent currency amounts I chose the .NET `decimal` data type, because it is more suitable for financial calculations. Compared to floating-point types, has more precision on small numbers (which is our case).
+- To categorize each article type, I defined the enum `ArticleTypes`.
 - To apply the tax application rules I chose a lookup structure (a `Dictionary`) to associate each `ArticleTypes` to a tax percentage. 
 
 ### Continuous Integration
 As a CI tool I chose **GitHub Actions**. I defined a configuration file, `.github/workflows/dotnet-core.yml` with some steps and conditions to build the repository projects:
 
-- Trigger: on every push or pull request on `main` branch
+- Trigger: every push or pull request on `main` branch
 - Running OS: Ubuntu last version
 - Actions:
   - Setup a .NET Core environment
